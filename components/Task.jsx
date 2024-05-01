@@ -1,4 +1,9 @@
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Modal, Select, Table } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
@@ -13,6 +18,11 @@ const Task = ({ tasks, setTasks }) => {
     status: "",
     description: "",
   });
+  const [filters, setFilters] = useState({
+    status: null,
+    dueDate: null,
+  });
+  const [searchTerm, setSearchTerm] = useState("");
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -36,11 +46,13 @@ const Task = ({ tasks, setTasks }) => {
     }
     setNewTask({ title: "", dueDate: null, status: "", description: "" });
   };
-
-  const handleEdit = (record, index) => {
-    setNewTask(record);
-    setEditedTaskIndex(index);
-    setIsModalVisible(true);
+  const handleEdit = (record) => {
+    const index = tasks.findIndex((task) => task === record);
+    if (index !== -1) {
+      setNewTask({ ...record });
+      setEditedTaskIndex(index);
+      setIsModalVisible(true);
+    }
   };
 
   const handleDelete = (record) => {
@@ -52,6 +64,17 @@ const Task = ({ tasks, setTasks }) => {
     setViewTaskDetails(record);
     setIsModalVisible(true);
   };
+
+  const filteredTasks = tasks?.filter((task) => {
+    if (filters.status && task.status !== filters.status) return false;
+    if (filters.dueDate && task.dueDate !== filters.dueDate) return false;
+    if (
+      searchTerm &&
+      !task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+      return false;
+    return true;
+  });
 
   const columns = [
     {
@@ -94,6 +117,7 @@ const Task = ({ tasks, setTasks }) => {
           >
             Edit
           </Button>
+
           <Button
             type="danger"
             className="bg-red-500 text-white font-semibold"
@@ -112,10 +136,31 @@ const Task = ({ tasks, setTasks }) => {
     <>
       <div>
         <h1 className="text-3xl font-bold text-center pt-12 pb-6">All Task</h1>
-        <div className="flex justify-end">
+        <div className="flex justify-between mb-4">
+          <div className="flex gap-2">
+            <Input
+              placeholder="Search Task"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              prefix={<SearchOutlined />}
+            />
+            <Select
+              defaultValue="Status"
+              style={{ width: 120 }}
+              onChange={(value) => setFilters({ ...filters, status: value })}
+            >
+              <Select.Option value="To Do">To Do</Select.Option>
+              <Select.Option value="In Progress">In Progress</Select.Option>
+              <Select.Option value="Done">Done</Select.Option>
+            </Select>
+            <DatePicker
+              placeholder="Due Date"
+              onChange={(date) => setFilters({ ...filters, dueDate: date })}
+            />
+          </div>
           <Button
             type="primary"
-            className="bg-green-600 mb-3 text-white font-semibold"
+            className="bg-green-600 ms-8 text-white font-semibold"
             icon={<PlusOutlined />}
             onClick={showModal}
           >
@@ -126,7 +171,7 @@ const Task = ({ tasks, setTasks }) => {
           pagination={false}
           className="w-[580px]"
           columns={columns}
-          dataSource={tasks}
+          dataSource={filteredTasks}
           bordered
         />
       </div>
