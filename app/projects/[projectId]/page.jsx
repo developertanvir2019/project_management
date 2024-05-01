@@ -23,7 +23,7 @@ export default function ProjectDetails() {
       <h1 className="text-center text-3xl font-bold py-8"> Project Details</h1>
       <div>
         <div className="block lg:flex justify-between gap-5 ">
-          <Task tasks={tasks} />
+          <Task setTasks={setTasks} tasks={tasks} />
           <TeamMember tasks={team} />
         </div>
       </div>
