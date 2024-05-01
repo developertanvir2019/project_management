@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ReactQueryProvider from "@/utils/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,9 +14,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <div className="flex justify-center">
-          <div style={{ maxWidth: "1200px" }} className="w-full">
-            {children}
-          </div>
+          <ReactQueryProvider>
+            <div style={{ maxWidth: "1200px" }} className="w-full">
+              {children}
+            </div>
+          </ReactQueryProvider>
         </div>
       </body>
     </html>
