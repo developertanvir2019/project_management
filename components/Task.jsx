@@ -135,7 +135,7 @@ const Task = ({ tasks, setTasks }) => {
   return (
     <>
       <div>
-        <h1 className="text-3xl font-bold text-center pt-12 pb-6">All Task</h1>
+        <h1 className="text-3xl  text-center pt-5 lg:pt-12 pb-6">All Task</h1>
         <div className="flex justify-between mb-4">
           <div className="flex gap-2">
             <Input
@@ -167,13 +167,15 @@ const Task = ({ tasks, setTasks }) => {
             Add Task
           </Button>
         </div>
-        <Table
-          pagination={false}
-          className="w-[580px]"
-          columns={columns}
-          dataSource={filteredTasks}
-          bordered
-        />
+        <div className="overflow-x-auto !w-[100vw] md:!w-full flex justify-center">
+          <Table
+            pagination={false}
+            className="w-[100vw] md:!w-[580px] lg:!w-[580px] overflow-x-auto"
+            columns={columns}
+            dataSource={filteredTasks}
+            bordered
+          />
+        </div>
       </div>
 
       <Modal

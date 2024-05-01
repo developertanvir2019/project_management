@@ -97,9 +97,7 @@ const TeamMember = ({ tasks, setTeam }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center pt-12 pb-6">
-        Team Members
-      </h1>
+      <h1 className="text-3xl  text-center pt-12 pb-6">Team Members</h1>
       <div className="flex justify-end">
         <Button
           type="primary"
@@ -110,13 +108,15 @@ const TeamMember = ({ tasks, setTeam }) => {
           Add Member
         </Button>
       </div>
-      <Table
-        pagination={false}
-        className="w-[580px]"
-        columns={columns}
-        dataSource={tasks}
-        bordered
-      />
+      <div className="overflow-x-auto !w-[100vw] md:!w-full flex justify-center">
+        <Table
+          pagination={false}
+          className="w-[100vw] md:!w-[580px] lg:!w-[580px] overflow-x-auto"
+          columns={columns}
+          dataSource={tasks}
+          bordered
+        />
+      </div>
 
       <Modal
         title={editedMember ? "Edit Member" : "Add Member"}

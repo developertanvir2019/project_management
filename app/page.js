@@ -114,7 +114,9 @@ export default function Home() {
     },
   ];
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center font-semibold text-lg mt-12">Loading...</div>
+    );
   }
 
   if (error) {
@@ -167,13 +169,15 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center pt-12 pb-6">
           All Projects
         </h1>
-        <Table
-          pagination={false}
-          className="w-[950px]"
-          columns={columns}
-          dataSource={projects}
-          bordered
-        />
+        <div className="overflow-x-auto sm:!w-[100vw] md:w-full flex justify-center">
+          <Table
+            pagination={false}
+            className="w-[100vw] md:!w-[950px] lg:!w-[950px] overflow-x-auto"
+            columns={columns}
+            dataSource={projects}
+            bordered
+          />
+        </div>
       </div>
     </main>
   );
