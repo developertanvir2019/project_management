@@ -1,14 +1,57 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Table } from "antd";
+import { Button, Table, Modal, Form, Input } from "antd";
+import { useState } from "react";
 
-const TeamMember = ({ tasks }) => {
-  console.log("object", tasks);
+const TeamMember = ({ tasks, setTeam }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editedMember, setEditedMember] = useState(null);
+  const [newMember, setNewMember] = useState({
+    id: tasks?.length + 1,
+    name: "",
+    email: "",
+  });
+
+  const showModal = (member) => {
+    setIsModalVisible(true);
+    if (member) {
+      setEditedMember(member);
+      setNewMember({ ...member });
+    } else {
+      setEditedMember(null);
+      setNewMember({ id: tasks.length + 1, name: "", email: "" });
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setEditedMember(null);
+    setNewMember({ id: tasks.length + 1, name: "", email: "" });
+  };
+
+  const handleSave = () => {
+    setIsModalVisible(false);
+    if (editedMember) {
+      const updatedTasks = tasks.map((task) =>
+        task.id === editedMember.id ? newMember : task
+      );
+      setTeam(updatedTasks);
+    } else {
+      setTeam([...tasks, newMember]);
+    }
+    setEditedMember(null);
+    setNewMember({ id: tasks.length + 1, name: "", email: "" });
+  };
+
+  const handleDelete = (record) => {
+    const updatedMember = tasks.filter((member) => member !== record);
+    setTeam(updatedMember);
+  };
+
   const columns = [
     {
       title: "id",
       dataIndex: "id",
-      key: "name",
-      render: (text) => <a>{text}</a>,
+      key: "id",
       width: 100,
     },
     {
@@ -34,7 +77,7 @@ const TeamMember = ({ tasks }) => {
             type="primary"
             className="bg-primary"
             icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
+            onClick={() => showModal(record)}
             style={{ marginRight: 8 }}
           >
             Edit
@@ -51,6 +94,7 @@ const TeamMember = ({ tasks }) => {
       ),
     },
   ];
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-center pt-12 pb-6">
@@ -61,7 +105,7 @@ const TeamMember = ({ tasks }) => {
           type="primary"
           className="bg-green-600 mb-3 text-white font-semibold"
           icon={<PlusOutlined />}
-          onClick={() => handleDelete(record)}
+          onClick={() => showModal()}
         >
           Add Member
         </Button>
@@ -73,6 +117,32 @@ const TeamMember = ({ tasks }) => {
         dataSource={tasks}
         bordered
       />
+
+      <Modal
+        title={editedMember ? "Edit Member" : "Add Member"}
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        onOk={handleSave}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Name">
+            <Input
+              value={newMember.name}
+              onChange={(e) =>
+                setNewMember({ ...newMember, name: e.target.value })
+              }
+            />
+          </Form.Item>
+          <Form.Item label="Email">
+            <Input
+              value={newMember.email}
+              onChange={(e) =>
+                setNewMember({ ...newMember, email: e.target.value })
+              }
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

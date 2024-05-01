@@ -24,7 +24,7 @@ export default function ProjectDetails() {
       <div>
         <div className="block lg:flex justify-between gap-5 ">
           <Task setTasks={setTasks} tasks={tasks} />
-          <TeamMember tasks={team} />
+          <TeamMember setTeam={setTeam} tasks={team} />
         </div>
       </div>
     </div>
