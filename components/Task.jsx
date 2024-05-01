@@ -1,14 +1,17 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Modal, Select, Table } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 
 const Task = ({ tasks, setTasks }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editedTaskIndex, setEditedTaskIndex] = useState(null);
+  const [viewTaskDetails, setViewTaskDetails] = useState(null);
   const [newTask, setNewTask] = useState({
     title: "",
     dueDate: null,
     status: "",
+    description: "",
   });
 
   const showModal = () => {
@@ -18,6 +21,7 @@ const Task = ({ tasks, setTasks }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
     setEditedTaskIndex(null);
+    setViewTaskDetails(null);
   };
 
   const handleAddTask = () => {
@@ -30,7 +34,7 @@ const Task = ({ tasks, setTasks }) => {
     } else {
       setTasks([...tasks, newTask]);
     }
-    setNewTask({ title: "", dueDate: null, status: "" });
+    setNewTask({ title: "", dueDate: null, status: "", description: "" });
   };
 
   const handleEdit = (record, index) => {
@@ -42,6 +46,11 @@ const Task = ({ tasks, setTasks }) => {
   const handleDelete = (record) => {
     const updatedTasks = tasks.filter((task) => task !== record);
     setTasks(updatedTasks);
+  };
+
+  const handleViewDetails = (record) => {
+    setViewTaskDetails(record);
+    setIsModalVisible(true);
   };
 
   const columns = [
@@ -58,7 +67,9 @@ const Task = ({ tasks, setTasks }) => {
       key: "startDate",
       width: 150,
       render: (dueDate) => (
-        <span>{dueDate ? new Date(dueDate).toLocaleDateString() : "-"}</span>
+        <span>
+          {dueDate ? new Date(dueDate).toLocaleDateString() : "4/08/2024"}
+        </span>
       ),
     },
     {
@@ -71,14 +82,14 @@ const Task = ({ tasks, setTasks }) => {
       title: "Actions",
       dataIndex: "",
       key: "actions",
-      width: 180,
-      render: (_, record, index) => (
+      width: 250,
+      render: (_, record) => (
         <div className="flex justify-center gap-3">
           <Button
             type="primary"
             className="bg-primary"
             icon={<EditOutlined />}
-            onClick={() => handleEdit(record, index)}
+            onClick={() => handleEdit(record)}
             style={{ marginRight: 8 }}
           >
             Edit
@@ -91,6 +102,7 @@ const Task = ({ tasks, setTasks }) => {
           >
             Delete
           </Button>
+          <Button onClick={() => handleViewDetails(record)}>View</Button>
         </div>
       ),
     },
@@ -120,7 +132,13 @@ const Task = ({ tasks, setTasks }) => {
       </div>
 
       <Modal
-        title={editedTaskIndex !== null ? "Edit Task" : "Add Task"}
+        title={
+          editedTaskIndex !== null
+            ? "Edit Task"
+            : viewTaskDetails
+            ? "Task Details"
+            : "Add Task"
+        }
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={[
@@ -132,32 +150,43 @@ const Task = ({ tasks, setTasks }) => {
           </Button>,
         ]}
       >
-        <Form layout="vertical">
-          <Form.Item label="Task Name">
-            <Input
-              value={newTask.title}
-              onChange={(e) =>
-                setNewTask({ ...newTask, title: e.target.value })
-              }
-            />
-          </Form.Item>
-          <Form.Item label="Status">
-            <Select
-              value={newTask.status}
-              onChange={(value) => setNewTask({ ...newTask, status: value })}
-            >
-              <Select.Option value="To Do">To Do</Select.Option>
-              <Select.Option value="In Progress">In Progress</Select.Option>
-              <Select.Option value="Done">Done</Select.Option>
-            </Select>
-          </Form.Item>
-          {/* <Form.Item label="Due Date">
-            <DatePicker
-              value={newTask.dueDate ? new Date(newTask.dueDate) : null}
-              onChange={(date) => setNewTask({ ...newTask, dueDate: date })}
-            />
-          </Form.Item> */}
-        </Form>
+        {viewTaskDetails ? (
+          <div>
+            <p>Title: {viewTaskDetails.title}</p>
+            <p>Description: {viewTaskDetails.description}</p>
+            <p>Due Date: {viewTaskDetails.dueDate}</p>
+            <p>Status: {viewTaskDetails.status}</p>
+          </div>
+        ) : (
+          <Form layout="vertical">
+            <Form.Item label="Task Name">
+              <Input
+                value={newTask.title}
+                onChange={(e) =>
+                  setNewTask({ ...newTask, title: e.target.value })
+                }
+              />
+            </Form.Item>
+            <Form.Item label="Description">
+              <TextArea
+                value={newTask.description}
+                onChange={(e) =>
+                  setNewTask({ ...newTask, description: e.target.value })
+                }
+              />
+            </Form.Item>
+            <Form.Item label="Status">
+              <Select
+                value={newTask.status}
+                onChange={(value) => setNewTask({ ...newTask, status: value })}
+              >
+                <Select.Option value="To Do">To Do</Select.Option>
+                <Select.Option value="In Progress">In Progress</Select.Option>
+                <Select.Option value="Done">Done</Select.Option>
+              </Select>
+            </Form.Item>
+          </Form>
+        )}
       </Modal>
     </>
   );
