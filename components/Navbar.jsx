@@ -89,15 +89,15 @@ const Navbar = () => {
                   aria-current="page"
                   aria-haspopup="false"
                   className="flex items-center gap-2 py-4 text-emerald-500 transition-colors duration-300 hover:text-emerald-600 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
-                  href={"/"}
+                  href={"/projects"}
                 >
-                  <span>Home</span>
+                  <span>Projects</span>
                 </Link>
               </li>
             </ul>
             <div className="ml-auto flex items-center px-6 lg:ml-0 lg:p-0">
               <Link
-                href={"/login"}
+                href={"/"}
                 className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white shadow-md shadow-emerald-200 transition duration-300 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
               >
                 <span>Login</span>

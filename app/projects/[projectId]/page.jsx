@@ -19,7 +19,7 @@ export default function ProjectDetails() {
     setTeam(specificTask?.[0]?.team);
   }, [data, projectId]);
   return (
-    <div>
+    <div className="mb-12">
       <h1 className="text-center text-3xl font-bold py-4 lg:py-8">
         {" "}
         Project Details

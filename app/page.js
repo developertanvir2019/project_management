@@ -1,184 +1,104 @@
 "use client";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
-import { Button, Input, InputNumber, Modal, Table } from "antd";
-import projectData from "../db.json";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input, notification } from "antd";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["projects"], // Key for the query
-    queryFn: () => Promise.resolve(projectData.projects), // Function that fetches the data
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedProject, setEditedProject] = useState(null);
-  const [projects, setProjects] = useState(data);
-  useEffect(() => {
-    setProjects(data);
-  }, [data]);
-  // Handler for edit button
-  const handleEdit = (record) => {
-    setEditedProject(record);
-    setIsModalOpen(true);
+  const router = useRouter();
+  const [form] = Form.useForm();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onFinish = (values) => {
+    setIsSubmitting(true);
+    // Simulate API call or any async operation for authentication
+    setTimeout(() => {
+      setIsSubmitting(false);
+      router.push("/projects");
+      // Show success notification
+      notification.success({
+        message: "Login Success",
+        description: "You have successfully logged in!",
+      });
+    }, 1000);
   };
-
-  const handleSave = () => {
-    // Find the index of the edited project in the projects array
-    const index = projects.findIndex(
-      (project) => project.id === editedProject.id
-    );
-    if (index !== -1) {
-      // Update the project in the projects array
-      const updatedProjects = [...projects];
-      updatedProjects[index] = editedProject;
-      setProjects(updatedProjects);
-    }
-    setIsModalOpen(false);
-  };
-
-  // Handler for delete button
-  const handleDelete = (record) => {
-    const remainingProject = projects?.filter((pro) => pro?.id !== record?.id);
-    setProjects(remainingProject);
-  };
-
-  const columns = [
-    {
-      title: "Serial",
-      dataIndex: "id",
-      key: "serial",
-      width: 80,
-    },
-    {
-      title: "Project Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
-      width: 180,
-    },
-    {
-      title: "Budget",
-      dataIndex: "budget",
-      key: "Budget",
-      width: 120,
-    },
-    {
-      title: "Team member",
-      dataIndex: "teamMember",
-      key: "member",
-      width: 140,
-    },
-    {
-      title: "Start Date",
-      dataIndex: "startDate",
-      key: "startDate",
-      width: 180,
-    },
-    {
-      title: "Actions",
-      dataIndex: "",
-      key: "actions",
-      width: 250,
-      render: (_, record) => (
-        <div className="flex justify-center gap-3">
-          <Link href={`/projects/${record.id}`}>
-            <Button
-              type="primary"
-              className="bg-primary"
-              icon={<EyeOutlined />}
-              style={{ marginRight: 8 }}
-            >
-              View
-            </Button>
-          </Link>
-          <Button
-            type="primary"
-            className="bg-primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-            style={{ marginRight: 8 }}
-          >
-            Edit
-          </Button>
-          <Button
-            type="danger"
-            className="bg-red-500 text-white font-semibold"
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record)}
-          >
-            Delete
-          </Button>
-        </div>
-      ),
-    },
-  ];
-  if (isLoading) {
-    return (
-      <div className="text-center font-semibold text-lg mt-12">Loading...</div>
-    );
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
 
   return (
-    <main className="flex justify-center">
-      <>
-        <Modal
-          title="Edit Project"
-          visible={isModalOpen}
-          onOk={handleSave}
-          onCancel={() => setIsModalOpen(false)}
+    <div className="flex justify-center items-center h-screen">
+      <div className="w-[450px] h-[330px] p-6 bg-gray-100">
+        <h3 className="text-2xl font-bold text-center pb-5">Login Now</h3>
+        <Form
+          form={form}
+          name="normal_login"
+          className="login-form w-full"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
         >
-          <Input
-            value={editedProject?.name}
-            onChange={(e) =>
-              setEditedProject({ ...editedProject, name: e.target.value })
-            }
-            placeholder="Project Name"
-          />
-          <InputNumber
-            value={editedProject?.budget}
-            onChange={(value) =>
-              setEditedProject({ ...editedProject, budget: value })
-            }
-            placeholder="Budget"
-            style={{ marginTop: "1rem", width: "100%" }}
-          />
-          <InputNumber
-            value={editedProject?.teamMember}
-            onChange={(value) =>
-              setEditedProject({ ...editedProject, teamMember: value })
-            }
-            placeholder="Team member"
-            style={{ marginTop: "1rem", width: "100%" }}
-          />
-          <Input
-            value={editedProject?.startDate}
-            onChange={(e) =>
-              setEditedProject({ ...editedProject, startDate: e.target.value })
-            }
-            placeholder="Start Date"
-            style={{ marginTop: "1rem", width: "100%" }}
-          />
-        </Modal>
-      </>
-      <div>
-        <h1 className="text-3xl font-bold text-center pt-12 pb-6">
-          All Projects
-        </h1>
-        <div className="overflow-x-auto sm:!w-[100vw] md:w-full flex justify-center">
-          <Table
-            pagination={false}
-            className="w-[100vw] md:!w-[950px] lg:!w-[950px] overflow-x-auto"
-            columns={columns}
-            dataSource={projects}
-            bordered
-          />
-        </div>
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
+              {
+                min: 6,
+                message: "Password must be at least 6 characters",
+              },
+              {
+                pattern: /(?=.*[A-Z])/,
+                message: "Password must contain at least one uppercase letter",
+              },
+              {
+                pattern: /(?=.*[!@#$%^&*])/,
+                message: "Password must contain at least one special character",
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Form.Item
+              className="bg-primary"
+              name="remember"
+              valuePropName="checked"
+              noStyle
+            >
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button bg-primary w-full h-10 mt-8"
+              loading={isSubmitting}
+            >
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
-    </main>
+    </div>
   );
 }
