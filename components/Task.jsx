@@ -38,7 +38,7 @@ const Task = ({ tasks, setTasks }) => {
     setIsModalVisible(false);
     if (editedTaskIndex !== null) {
       const updatedTasks = [...tasks];
-      updatedTasks[editedTaskIndex] = newTask;
+      updatedTasks[editedTaskIndex] = { ...newTask };
       setTasks(updatedTasks);
       setEditedTaskIndex(null);
     } else {
