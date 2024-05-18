@@ -5,42 +5,35 @@ import { Button, Input, InputNumber, Modal, Table } from "antd";
 import projectData from "../../db.json";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import useStore from "@/zustand/store";
 
 const ProjectPage = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["projects"], // Key for the query
-    queryFn: () => Promise.resolve(projectData.projects), // Function that fetches the data
-  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedProject, setEditedProject] = useState(null);
-  const [projects, setProjects] = useState(data);
+  const { projects, setProjects, deleteProject, editProject } = useStore();
+  // using react query for fetch data
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["projects"],
+    queryFn: () => Promise.resolve(projectData.projects),
+  });
+
   useEffect(() => {
     setProjects(data);
-  }, [data]);
-  // Handler for edit button
+  }, [data, setProjects]);
+
   const handleEdit = (record) => {
     setEditedProject(record);
     setIsModalOpen(true);
   };
 
   const handleSave = () => {
-    // Find the index of the edited project in the projects array
-    const index = projects.findIndex(
-      (project) => project.id === editedProject.id
-    );
-    if (index !== -1) {
-      // Update the project in the projects array
-      const updatedProjects = [...projects];
-      updatedProjects[index] = editedProject;
-      setProjects(updatedProjects);
+    if (editedProject) {
+      editProject(editedProject);
+      setIsModalOpen(false);
     }
-    setIsModalOpen(false);
   };
-
-  // Handler for delete button
   const handleDelete = (record) => {
-    const remainingProject = projects?.filter((pro) => pro?.id !== record?.id);
-    setProjects(remainingProject);
+    deleteProject(record.id);
   };
 
   const columns = [

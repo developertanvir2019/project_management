@@ -1,17 +1,21 @@
-import create from "zustand";
+import { create } from "zustand";
 
 const useStore = create((set) => ({
-  tasks: [],
+  projects: [],
 
-  // Function to update task status
-  updateTaskStatus: (taskIndex, newStatus) =>
+  setProjects: (projects) => set({ projects }),
+
+  deleteProject: (projectId) =>
     set((state) => ({
-      tasks: state.tasks.map((task, index) =>
-        index === taskIndex ? { ...task, status: newStatus } : task
-      ),
+      projects: state.projects.filter((project) => project.id !== projectId),
     })),
 
-  // Add more state and actions as needed
+  editProject: (editedProject) =>
+    set((state) => ({
+      projects: state.projects.map((project) =>
+        project.id === editedProject.id ? editedProject : project
+      ),
+    })),
 }));
 
 export default useStore;
