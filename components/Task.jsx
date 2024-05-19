@@ -1,6 +1,7 @@
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   PlusOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
@@ -77,6 +78,13 @@ const Task = ({ tasks, setTasks }) => {
     setIsModalVisible(true);
   };
 
+  const handleComplete = (record) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === record.id ? { ...task, status: "Done" } : task
+    );
+    setTasks(updatedTasks);
+  };
+
   const filteredTasks = tasks?.filter((task) => {
     if (filters.status && task.status !== filters.status) return false;
     if (filters.dueDate && task.dueDate !== filters.dueDate) return false;
@@ -124,19 +132,28 @@ const Task = ({ tasks, setTasks }) => {
             icon={<EditOutlined />}
             onClick={() => handleEdit(record)}
             style={{ marginRight: 8 }}
-          >
-            Edit
-          </Button>
+          ></Button>
 
           <Button
             type="danger"
             className="bg-red-500 text-white font-semibold"
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(record)}
-          >
-            Delete
-          </Button>
-          <Button onClick={() => handleViewDetails(record)}>View</Button>
+          ></Button>
+          <Button
+            icon={<EyeOutlined />}
+            onClick={() => handleViewDetails(record)}
+          ></Button>
+
+          {record.status !== "Done" && (
+            <Button
+              type="primary"
+              className="bg-green-600 text-white font-semibold"
+              onClick={() => handleComplete(record)}
+            >
+              Complete
+            </Button>
+          )}
         </div>
       ),
     },
