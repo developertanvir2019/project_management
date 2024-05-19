@@ -14,7 +14,7 @@ const Task = ({ tasks, setTasks }) => {
   const [viewTaskDetails, setViewTaskDetails] = useState(null);
   const [newTask, setNewTask] = useState({
     title: "",
-    dueDate: Date(),
+    dueDate: new Date(),
     status: "",
     description: "",
     team: [],

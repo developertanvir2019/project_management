@@ -14,9 +14,14 @@ export default function ProjectDetails() {
   const [tasks, setTasks] = useState();
   const [team, setTeam] = useState();
   useEffect(() => {
-    const specificTask = data?.filter((task) => task?.id == projectId);
-    setTasks(specificTask?.[0].tasks);
-    setTeam(specificTask?.[0]?.team);
+    if (data) {
+      const specificProject = data.find((project) => project.id == projectId);
+      if (specificProject) {
+        setTasks(specificProject.tasks);
+        const allTeams = specificProject.tasks.flatMap((task) => task.team);
+        setTeam(allTeams);
+      }
+    }
   }, [data, projectId]);
   return (
     <div className="mb-12">
