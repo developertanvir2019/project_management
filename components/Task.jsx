@@ -232,10 +232,16 @@ const Task = ({ tasks, setTasks }) => {
             <p>Description: {viewTaskDetails.description}</p>
             <p>Due Date: {viewTaskDetails.dueDate}</p>
             <p>Status: {viewTaskDetails.status}</p>
-            <p>
-              Team:{" "}
-              {viewTaskDetails.team.map((member) => member.name).join(", ")}
-            </p>
+            {viewTaskDetails?.team?.map((member, i) => {
+              return (
+                <div key={i} className="flex justify-start gap-2 items-center">
+                  <p className="text-lg font-semibold text-blue-600">
+                    {member?.name}
+                  </p>
+                  <p> -{member?.role}</p>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <Form layout="vertical">
@@ -281,6 +287,10 @@ const Task = ({ tasks, setTasks }) => {
                 }}
               >
                 <Select.Option value="John Doe">John Doe</Select.Option>
+                <Select.Option value="Moin Ali">Moin Ali</Select.Option>
+                <Select.Option value="Tanvir Ahmed">Tanvir Ahmed</Select.Option>
+                <Select.Option value="Jeson Roy">Jeson Roy</Select.Option>
+                <Select.Option value="Jos Butler">Jos Butler</Select.Option>
                 <Select.Option value="Jane Smith">Jane Smith</Select.Option>
                 <Select.Option value="Alice Johnson">
                   Alice Johnson
