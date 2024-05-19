@@ -1,7 +1,7 @@
 "use client";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Input, InputNumber, Modal, Table } from "antd";
+import { Button, Input, InputNumber, Modal, Table, notification } from "antd";
 import projectData from "../../db.json";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -34,6 +34,10 @@ const ProjectPage = () => {
   };
   const handleDelete = (record) => {
     deleteProject(record.id);
+    notification.success({
+      message: "Deleted",
+      description: "deleted the project!",
+    });
   };
 
   const columns = [
