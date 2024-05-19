@@ -14,9 +14,10 @@ const Task = ({ tasks, setTasks }) => {
   const [viewTaskDetails, setViewTaskDetails] = useState(null);
   const [newTask, setNewTask] = useState({
     title: "",
-    dueDate: null,
+    dueDate: Date(),
     status: "",
     description: "",
+    team: [],
   });
   const [filters, setFilters] = useState({
     status: null,
@@ -38,16 +39,27 @@ const Task = ({ tasks, setTasks }) => {
     setIsModalVisible(false);
     if (editedTaskIndex !== null) {
       const updatedTasks = [...tasks];
-      updatedTasks[editedTaskIndex] = { ...newTask };
+      updatedTasks[editedTaskIndex] = {
+        ...newTask,
+        id: updatedTasks[editedTaskIndex].id,
+      };
       setTasks(updatedTasks);
       setEditedTaskIndex(null);
     } else {
-      setTasks([...tasks, newTask]);
+      const newTaskWithId = { ...newTask, id: tasks.length + 1 };
+      setTasks([...tasks, newTaskWithId]);
     }
-    setNewTask({ title: "", dueDate: null, status: "", description: "" });
+    setNewTask({
+      title: "",
+      dueDate: null,
+      status: "",
+      description: "",
+      team: [],
+    });
   };
+
   const handleEdit = (record) => {
-    const index = tasks.findIndex((task) => task === record);
+    const index = tasks.findIndex((task) => task.id === record.id);
     if (index !== -1) {
       setNewTask({ ...record });
       setEditedTaskIndex(index);
@@ -56,7 +68,7 @@ const Task = ({ tasks, setTasks }) => {
   };
 
   const handleDelete = (record) => {
-    const updatedTasks = tasks.filter((task) => task !== record);
+    const updatedTasks = tasks.filter((task) => task.id !== record.id);
     setTasks(updatedTasks);
   };
 
@@ -90,9 +102,7 @@ const Task = ({ tasks, setTasks }) => {
       key: "startDate",
       width: 150,
       render: (dueDate) => (
-        <span>
-          {dueDate ? new Date(dueDate).toLocaleDateString() : "4/08/2024"}
-        </span>
+        <span>{dueDate ? new Date(dueDate).toLocaleDateString() : ""}</span>
       ),
     },
     {
@@ -192,9 +202,11 @@ const Task = ({ tasks, setTasks }) => {
           <Button key="cancel" onClick={handleCancel}>
             Cancel
           </Button>,
-          <Button key="add" type="primary" onClick={handleAddTask}>
-            {editedTaskIndex !== null ? "Save" : "Add"}
-          </Button>,
+          !viewTaskDetails && (
+            <Button key="add" type="primary" onClick={handleAddTask}>
+              {editedTaskIndex !== null ? "Save" : "Add"}
+            </Button>
+          ),
         ]}
       >
         {viewTaskDetails ? (
@@ -203,6 +215,10 @@ const Task = ({ tasks, setTasks }) => {
             <p>Description: {viewTaskDetails.description}</p>
             <p>Due Date: {viewTaskDetails.dueDate}</p>
             <p>Status: {viewTaskDetails.status}</p>
+            <p>
+              Team:{" "}
+              {viewTaskDetails.team.map((member) => member.name).join(", ")}
+            </p>
           </div>
         ) : (
           <Form layout="vertical">
@@ -230,6 +246,28 @@ const Task = ({ tasks, setTasks }) => {
                 <Select.Option value="To Do">To Do</Select.Option>
                 <Select.Option value="In Progress">In Progress</Select.Option>
                 <Select.Option value="Done">Done</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Team">
+              <Select
+                mode="multiple"
+                value={newTask.team.map((member) => member.name)}
+                onChange={(values) => {
+                  const selectedTeam = values.map((name, index) => ({
+                    id: index + 1,
+                    name,
+                    email: `${name
+                      .toLowerCase()
+                      .replace(" ", ".")}@example.com`,
+                  }));
+                  setNewTask({ ...newTask, team: selectedTeam });
+                }}
+              >
+                <Select.Option value="John Doe">John Doe</Select.Option>
+                <Select.Option value="Jane Smith">Jane Smith</Select.Option>
+                <Select.Option value="Alice Johnson">
+                  Alice Johnson
+                </Select.Option>
               </Select>
             </Form.Item>
           </Form>

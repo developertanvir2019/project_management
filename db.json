@@ -14,7 +14,23 @@
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           "dueDate": "2024-05-10",
           "status": "In Progress",
-          "assignedTo": 1
+          "team": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com"
+            },
+            {
+              "id": 2,
+              "name": "Jane Smith",
+              "email": "jane@example.com"
+            },
+            {
+              "id": 3,
+              "name": "Alice Johnson",
+              "email": "alice@example.com"
+            }
+          ]
         },
         {
           "id": 2,
@@ -22,34 +38,23 @@
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           "dueDate": "2024-05-15",
           "status": "To Do",
-          "assignedTo": 2
-        }
-      ],
-      "team": [
-        {
-          "id": 1,
-          "name": "John Doe",
-          "email": "john@example.com"
-        },
-        {
-          "id": 2,
-          "name": "Jane Smith",
-          "email": "jane@example.com"
-        },
-        {
-          "id": 3,
-          "name": "Alice Johnson",
-          "email": "alice@example.com"
-        },
-        {
-          "id": 4,
-          "name": "Bob Brown",
-          "email": "bob@example.com"
-        },
-        {
-          "id": 5,
-          "name": "Charlie Davis",
-          "email": "charlie@example.com"
+          "team": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com"
+            },
+            {
+              "id": 2,
+              "name": "Jane Smith",
+              "email": "jane@example.com"
+            },
+            {
+              "id": 3,
+              "name": "Alice Johnson",
+              "email": "alice@example.com"
+            }
+          ]
         }
       ]
     },
@@ -62,29 +67,18 @@
       "startDate": "2024-04-15",
       "tasks": [
         {
-          "id": 3,
+          "id": 1,
           "title": "Task 3",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           "dueDate": "2024-05-20",
           "status": "To Do",
-          "assignedTo": 3
-        }
-      ],
-      "team": [
-        {
-          "id": 2,
-          "name": "Jane Smith",
-          "email": "jane@example.com"
-        },
-        {
-          "id": 3,
-          "name": "Alice Johnson",
-          "email": "alice@example.com"
-        },
-        {
-          "id": 4,
-          "name": "Bob Brown",
-          "email": "bob@example.com"
+          "team": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com"
+            }
+          ]
         }
       ]
     },
@@ -102,7 +96,18 @@
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           "dueDate": "2024-05-10",
           "status": "In Progress",
-          "assignedTo": 1
+          "team": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com"
+            },
+            {
+              "id": 2,
+              "name": "Jane Smith",
+              "email": "jane@example.com"
+            }
+          ]
         },
         {
           "id": 2,
@@ -110,62 +115,23 @@
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
           "dueDate": "2024-05-15",
           "status": "To Do",
-          "assignedTo": 2
-        }
-      ],
-      "team": [
-        {
-          "id": 1,
-          "name": "John Doe",
-          "email": "john@example.com"
-        },
-        {
-          "id": 2,
-          "name": "Jane Smith",
-          "email": "jane@example.com"
-        },
-        {
-          "id": 3,
-          "name": "Alice Johnson",
-          "email": "alice@example.com"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "Project D",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "budget": 39000,
-      "teamMember": 2,
-      "startDate": "2028-04-01",
-      "tasks": [
-        {
-          "id": 1,
-          "title": "Task 1",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          "dueDate": "2024-05-10",
-          "status": "In Progress",
-          "assignedTo": 1
-        },
-        {
-          "id": 2,
-          "title": "Task 2",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          "dueDate": "2024-05-15",
-          "status": "To Do",
-          "assignedTo": 2
-        }
-      ],
-      "team": [
-        {
-          "id": 1,
-          "name": "John Doe",
-          "email": "john@example.com"
-        },
-        {
-          "id": 2,
-          "name": "Jane Smith",
-          "email": "jane@example.com"
+          "team": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com"
+            },
+            {
+              "id": 2,
+              "name": "Jane Smith",
+              "email": "jane@example.com"
+            },
+            {
+              "id": 3,
+              "name": "Alice Johnson",
+              "email": "alice@example.com"
+            }
+          ]
         }
       ]
     }
