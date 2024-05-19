@@ -22,10 +22,10 @@ const TeamMember = ({ tasks, setTeam }) => {
       width: 150,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      width: 150,
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      width: 200,
     },
     {
       title: "Actions",

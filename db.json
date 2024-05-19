@@ -2,57 +2,57 @@
   "projects": [
     {
       "id": 1,
-      "name": "Project A",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "budget": 100000,
+      "name": "Repair CMS Dashboard",
+      "description": "Its a project who can server your business like automation. User can purchase it subscription based",
+      "budget": 350000,
       "teamMember": 5,
       "startDate": "2024-04-01",
       "tasks": [
         {
           "id": 1,
-          "title": "Task 1",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "title": "UI Design",
+          "description": "This part is complete by designer.",
           "dueDate": "2024-05-10",
           "status": "In Progress",
           "team": [
             {
               "id": 1,
               "name": "John Doe",
-              "email": "john@example.com"
+              "email": "john@example.com",
+              "role": "UI/UX designer"
             },
             {
               "id": 2,
               "name": "Jane Smith",
-              "email": "jane@example.com"
-            },
-            {
-              "id": 3,
-              "name": "Alice Johnson",
-              "email": "alice@example.com"
+              "email": "jane@example.com",
+              "role": "Frontend developer"
             }
           ]
         },
         {
           "id": 2,
-          "title": "Task 2",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "title": "Development",
+          "description": "It is development part of this project",
           "dueDate": "2024-05-15",
           "status": "To Do",
           "team": [
             {
-              "id": 1,
-              "name": "John Doe",
-              "email": "john@example.com"
-            },
-            {
-              "id": 2,
-              "name": "Jane Smith",
-              "email": "jane@example.com"
-            },
-            {
               "id": 3,
+              "name": "Tanvir Ahmed",
+              "email": "john@example.com",
+              "role": "Full-stack developer"
+            },
+            {
+              "id": 4,
+              "name": "Jane Smith",
+              "email": "jane@example.com",
+              "role": "Front-end developer"
+            },
+            {
+              "id": 5,
               "name": "Alice Johnson",
-              "email": "alice@example.com"
+              "email": "alice@example.com",
+              "role": "Backend developer"
             }
           ]
         }
@@ -60,23 +60,51 @@
     },
     {
       "id": 2,
-      "name": "Project B",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "budget": 80000,
-      "teamMember": 3,
+      "name": "Fastcom Bazar",
+      "description": "Fastcom is a perfect e-commerce solution for your digital business. You can do automation your own business with Fastcom",
+      "budget": 87000,
+      "teamMember": 4,
       "startDate": "2024-04-15",
       "tasks": [
         {
           "id": 1,
-          "title": "Task 3",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "title": "Store Development",
+          "description": "Its part is just for development the store",
           "dueDate": "2024-05-20",
           "status": "To Do",
           "team": [
             {
               "id": 1,
-              "name": "John Doe",
-              "email": "john@example.com"
+              "name": "Josh Butler",
+              "email": "john@example.com",
+              "role": "Frontend developer"
+            },
+            {
+              "id": 2,
+              "name": "Moin Ali",
+              "email": "john@example.com",
+              "role": "Backend developer"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Dashboard Development",
+          "description": "Its part is just for development the dashboard",
+          "dueDate": "2024-05-20",
+          "status": "To Do",
+          "team": [
+            {
+              "id": 3,
+              "name": "Json roy",
+              "email": "john@example.com",
+              "role": "Database Designer"
+            },
+            {
+              "id": 4,
+              "name": "Liam Livistone",
+              "email": "john@example.com",
+              "role": "Backend developer"
             }
           ]
         }
